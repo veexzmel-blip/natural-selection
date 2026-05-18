@@ -45,8 +45,8 @@ void Food::createMeat(float x, float y, float energy){
             return;
         }
 
-        float remainingEnergy = energy - (meatCount * MEAT_ENERGY);
-        energyBank += remainingEnergy;
+        float remainEnergy = energy - (meatCount * MEAT_ENERGY);
+        energyBank += remainEnergy;
 
         for (int i = 0; i < meatCount; i++) {
             Food* meat = new Food("meat");

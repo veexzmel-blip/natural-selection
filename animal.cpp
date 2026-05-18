@@ -58,12 +58,11 @@ void Animal::update(){
 }
 
 void Animal::initRandom() {
-    this->size = 0.5f + static_cast<float>(rand()) / (static_cast<float>(RAND_MAX) / 1.5f);
-    this->power = 0.5f + static_cast<float>(rand()) / (static_cast<float>(RAND_MAX) / 1.5f);
-    this->regeneration = 0.5f + static_cast<float>(rand()) / (static_cast<float>(RAND_MAX) / 1.5f);
-    this->protection = 0.5f + static_cast<float>(rand()) / (static_cast<float>(RAND_MAX) / 1.5f);
-
-    this->mutationFactor = 0.05f + static_cast<float>(rand()) / (static_cast<float>(RAND_MAX) / 0.20f);
+    this->size = 0.1f + static_cast<float>(rand()) / (static_cast<float>(RAND_MAX) / 4.9f);
+    this->power = 0.1f + static_cast<float>(rand()) / (static_cast<float>(RAND_MAX) / 3.9f);
+    this->regeneration = static_cast<float>(rand()) / (static_cast<float>(RAND_MAX) / 5.0f);
+    this->protection = static_cast<float>(rand()) / (static_cast<float>(RAND_MAX) / 10.0f);
+    this->mutationFactor = 0.01f + static_cast<float>(rand()) / (static_cast<float>(RAND_MAX) / 0.49f);
 
     this->age = 0.0f;
     this->hp = this->maxHp;
@@ -141,7 +140,7 @@ void Animal::eat(const QString& type){
 }
 
 bool Animal::canReproduce(){
-    if(energy > bornCare + 200){
+    if(energy > bornCare + (maxEnergy / 4) + 5.0f){
         return 1;
     }else{
         return 0;

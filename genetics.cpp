@@ -9,30 +9,23 @@ void Genetics::calculateStats(Animal* animal) {
     if (!animal) return;
 
     float cube = std::pow(animal->size, 3.0f);
-    float square = std::pow(animal->size, 2.0f);
-
-    animal->lifecare = (std::pow(cube, 0.75f) * 0.05f) + (animal->regeneration * 0.1f);
-
     animal->maxEnergy = cube * 300.0f + 200.0f;
-
     animal->maxHp = (cube * 50.0f) + (animal->protection * 50.0f);
+    float muscleDensity = animal->power / animal->size;
+    float overPowerPenalty = 0.0f;
+    if (muscleDensity > 1.92f) {
+        overPowerPenalty = std::pow(muscleDensity, 2.0f) * 0.5f;
+        animal->maxHp *= (1.5f / muscleDensity);
+    }
 
+    animal->lifecare = (std::pow(cube, 0.75f) * 0.05f) + (animal->regeneration * 0.1f) + overPowerPenalty;
+    animal->speedCare = (cube * 0.02f) + (animal->power * 0.05f);
     float muscleForce = std::pow(animal->size, 3.5f) * animal->power;
-
     animal->damage = animal->power * cube * 5.0f;
-
     animal->bornCare = animal->maxEnergy * 0.4f;
 
-    animal->maxRotationSpeed = 0.5f * (1.0f / (1.0f + (animal->size * 0.5f)));
-
+    animal->maxRotationSpeed = 0.5f * (1.0f / (1.0f + (animal->size * 0.5f) + overPowerPenalty * 0.1f));
     animal->maxSpeed = (muscleForce / cube) * 5.0f;
-
-    animal->maxRotationSpeed = 0.6f / (1.0f + animal->size * 0.7f);
-
-    animal->damage = animal->power * cube * 5.0f;
-
-    animal->bornCare = animal->maxEnergy * 0.7f;
-
 }
 
 void Genetics::mutate(Animal* animal){

@@ -233,29 +233,6 @@ QVector<Food*> Grid::getFoodInRadius(float x, float y, float radius) {
     return result;
 }
 
-Food* Grid::getNearestFood(float x, float y, float maxRadius) {
-    auto objects = getObjectsInRadius(x, y, maxRadius);
-
-    Food* nearest = nullptr;
-    float minDistSq = maxRadius * maxRadius;
-
-    for (Object* obj : objects) {
-        Food* food = dynamic_cast<Food*>(obj);
-        if (food) {
-            float dx = food->getX() - x;
-            float dy = food->getY() - y;
-            float distSq = dx * dx + dy * dy;
-
-            if (distSq < minDistSq) {
-                minDistSq = distSq;
-                nearest = food;
-            }
-        }
-    }
-
-    return nearest;
-}
-
 Food* Grid::getNearestFoodByType(float x, float y, float maxRadius, const QString& type) {
     QVector<Object*> objects = getObjectsInRadius(x, y, maxRadius);
 
